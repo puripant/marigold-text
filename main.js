@@ -6,6 +6,7 @@ var w = context.canvas.width;
 var h = context.canvas.height;
 var bubbles = [];
 
+context.font = '30px sans-serif';
 context.fillStyle = "#AAAA00";
 generate(input.value);
 input.onkeyup = function() { generate(this.value) };
@@ -14,17 +15,17 @@ function generate(text) {
   var radius = 5;
   bubbles = []; // clear array
   context.clearRect(0, 0, w, h);
-  context.fillText(text.toUpperCase(), 0, 10);
+  context.fillText(text.toUpperCase(), 0, 40);
 
   var data = context.getImageData(0, 0, w, h).data.buffer;
   var data32 = new Uint32Array(data); //uint32 for speed
   for(var i = 0; i < data32.length; i++) {
     if (data32[i] & 0xff000000) { // only if alpha mask == 255 (solid)
       bubbles.push({
-        x: (i % w) * radius * 2 + radius,
-        y: ((i / w)|0) * radius * 2 + radius,
+        x: (i % w) * radius * 2 + radius + (Math.random()-0.5)*radius,
+        y: (i / w) * radius * 2 + radius + (Math.random()-0.5)*radius,
         radius: radius,
-        a: (Math.random() * 250)|0
+        // a: (Math.random() * 250)
       });
     }
   }
@@ -33,9 +34,11 @@ function generate(text) {
 (function animate() {
   context.clearRect(0, 0, w, h);
   context.beginPath();
-  for(var i = 0, bubble; bubble = bubbles[i]; i++) {
+  for(var i = 0, bubble; i < bubbles.length; i++) {
+    var bubble = bubbles[i];
     var dx = 0; //Math.sin(bubble.a * 0.2) + bubble.radius,
-        dy = 0; //Math.cos(bubble.a++ * 0.2) + bubble.radius;
+    var dy = 0; //Math.cos(bubble.a++ * 0.2) + bubble.radius;
+
     context.moveTo(bubble.x + bubble.radius + dx, bubble.y + dy);
     context.arc(bubble.x + dx, bubble.y + dy, bubble.radius, 0, 2*Math.PI);
     context.closePath();
