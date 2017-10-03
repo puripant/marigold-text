@@ -7,7 +7,7 @@ var h = context.canvas.height;
 var bubbles = [];
 
 context.font = '30px sans-serif';
-context.fillStyle = "#AAAA00";
+// context.globalAlpha = 0.8;
 generate(input.value);
 input.onkeyup = function() { generate(this.value) };
 
@@ -24,25 +24,34 @@ function generate(text) {
       bubbles.push({
         x: (i % w) * radius * 2 + radius + (Math.random()-0.5)*radius,
         y: (i / w) * radius * 2 + radius + (Math.random()-0.5)*radius,
-        radius: radius,
-        // a: (Math.random() * 250)
+        radius: radius + (Math.random()-0.5)*radius/2,
+        count: Math.random() * 1000
       });
     }
   }
 }
 
+var bubble, x, y, radius, rgValue;
 (function animate() {
   context.clearRect(0, 0, w, h);
-  context.beginPath();
-  for(var i = 0, bubble; i < bubbles.length; i++) {
-    var bubble = bubbles[i];
-    var dx = 0; //Math.sin(bubble.a * 0.2) + bubble.radius,
-    var dy = 0; //Math.cos(bubble.a++ * 0.2) + bubble.radius;
 
-    context.moveTo(bubble.x + bubble.radius + dx, bubble.y + dy);
-    context.arc(bubble.x + dx, bubble.y + dy, bubble.radius, 0, 2*Math.PI);
+  for(var i = 0, bubble; i < bubbles.length; i++) {
+    context.beginPath();
+
+    bubble = bubbles[i];
+    x = bubble.x + Math.sin(bubble.count * 0.05) + bubble.radius;
+    y = bubble.y + Math.cos(bubble.count * 0.05) + bubble.radius;
+    radius = bubble.radius + Math.sin(bubble.count * 0.01) + bubble.radius/10;
+    rgValue = Math.floor(200 + Math.sin(bubble.count * 0.1)*20);
+    bubble.count++;
+
+    context.moveTo(x + radius, y);
+    context.arc(x, y, radius, 0, 2*Math.PI);
     context.closePath();
+
+    context.fillStyle = "rgba("+rgValue+","+rgValue+",20,0.9)";
+    context.fill();
   }
-  context.fill();
+
   requestAnimationFrame(animate);
 })();

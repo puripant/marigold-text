@@ -1,3 +1,5 @@
 body {
-  font: bold 16px sans-serif
+  font: bold 16px sans-serif;
+  color: white;
+  background-color: black;
 }
