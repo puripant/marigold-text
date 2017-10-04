@@ -8,6 +8,11 @@ body {
   font-size: 20px;
   color: white;
   background-color: black;
+  text-align: center;
+}
+
+canvas, .text-input {
+  margin: 0 auto;
   width: 800px;
 }
 
