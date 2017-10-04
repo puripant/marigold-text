@@ -6,16 +6,35 @@ var w = context.canvas.width;
 var h = context.canvas.height;
 var bubbles = [];
 
-context.font = '30px Athiti';
+context.font = "30px Athiti";
+context.textAlign = "center";
 // context.globalAlpha = 0.8;
-generate(input.value);
-input.onkeyup = function() { generate(this.value) };
+
+window.onload = function() { generate(input.value); };
+input.onkeyup = function() { generate(this.value); };
 
 function generate(text) {
   var radius = 5;
   bubbles = []; // clear array
   context.clearRect(0, 0, w, h);
-  context.fillText(text, 0, 30);
+
+  //Break long text first
+  var words = text.split(" ");
+  var line = words[0];
+  var lineWidth = 80;
+  var lineHeight = 30;
+  var y = 30;
+  for(var i = 1; i < words.length; i++) {
+    var testLine = line + " " + words[i];
+    if(context.measureText(testLine).width > lineWidth) {
+      context.fillText(line, lineWidth/2, y);
+      line = words[i];
+      y += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+  context.fillText(line, lineWidth/2, y);
 
   var data = context.getImageData(0, 0, w, h).data.buffer;
   var data32 = new Uint32Array(data); //uint32 for speed
