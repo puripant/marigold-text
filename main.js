@@ -6,7 +6,7 @@ var w = context.canvas.width;
 var h = context.canvas.height;
 var bubbles = [];
 
-context.font = '30px sans-serif';
+context.font = '30px Athiti';
 // context.globalAlpha = 0.8;
 generate(input.value);
 input.onkeyup = function() { generate(this.value) };
@@ -15,7 +15,7 @@ function generate(text) {
   var radius = 5;
   bubbles = []; // clear array
   context.clearRect(0, 0, w, h);
-  context.fillText(text.toUpperCase(), 0, 40);
+  context.fillText(text, 0, 30);
 
   var data = context.getImageData(0, 0, w, h).data.buffer;
   var data32 = new Uint32Array(data); //uint32 for speed

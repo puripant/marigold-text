@@ -1,5 +1,27 @@
 body {
-  font: bold 16px sans-serif;
+  /*font-family: 'Pattaya', sans-serif;*/
+  /*font-family: 'Chonburi', cursive;*/
+  /*font-family: 'Prompt', sans-serif;*/
+  /*font-family: 'Kanit', sans-serif;*/
+  /*font-family: 'Mitr', sans-serif;*/
+  font-family: 'Athiti', sans-serif;
+  font-size: 20px;
   color: white;
   background-color: black;
+  width: 800px;
+}
+
+.text-input {
+  text-align: center;
+}
+
+input {
+  font-family: 'Athiti', sans-serif;
+  font-size: 16px;
+  color: white;
+  width: 700px;
+  background: transparent;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid white;
 }
